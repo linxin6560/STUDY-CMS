@@ -56,11 +56,9 @@ public class ManageHeadlineAction extends ManageBaseAction {
             @RequestParam(value = "file") MultipartFile file,
             @RequestParam(value = "name") String name,
             @RequestParam(value = "url") String url, HttpServletRequest request) {
-        System.out.println("file=" + file + ",name=" + name + ",url=" + url);
         JsonVo<String> json = new JsonVo<String>();
         try {
-            headlineService.addHeadline(file, SSUtils.toText(name),
-                    SSUtils.toText(url));
+            headlineService.addHeadline(file, SSUtils.toText(name), SSUtils.toText(url));
         } catch (IllegalStateException e) {
             e.printStackTrace();
         } catch (UploadException e) {

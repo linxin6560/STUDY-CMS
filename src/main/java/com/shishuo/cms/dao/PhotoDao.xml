@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Changsha Shishuo Network Technology Co., Ltd. All rights reserved. -->
+<!-- 长沙市师说网络科技有限公司 版权所有 -->
+<!-- http://www.shishuo.com -->
+
+<mapper namespace="com.shishuo.cms.dao.PhotoDao">
+
+    <!-- ############################## -->
+    <!-- ###### 增加 ###### -->
+    <!-- ############################## -->
+
+    <insert id="addPhoto" parameterType="com.shishuo.cms.entity.Photo">
+        insert into
+        photo(title,filename,photoId,createTime)
+        value(#{title},#{filename},#{photoId},#{createTime})
+        <selectKey resultType="int" keyProperty="id">
+            SELECT
+            LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <!-- ############################## -->
+    <!-- ###### 删除 ###### -->
+    <!-- ############################## -->
+
+    <delete id="deletePhoto" parameterType="long">
+        DELETE FROM photo
+        WHERE id = #{id}
+    </delete>
+
+    <!-- ############################## -->
+    <!-- ###### 修改 ###### -->
+    <!-- ############################## -->
+
+    <update id="updatePhotoById">
+        UPDATE photo
+        SET title = #{title}, filename = #{filename}
+        WHERE id = #{id}
+    </update>
+    <!-- ############################## -->
+    <!-- ###### 查询 ###### -->
+    <!-- ############################## -->
+
+    <select id="getAllList" resultType="com.shishuo.cms.entity.Photo">
+        SELECT *
+        FROM photo
+        WHERE albumId = #{albumId}
+        LIMIT #{offset}, #{rows}
+    </select>
+
+    <select id="getAllListCount" resultType="int">
+        SELECT count(*)
+        FROM photo
+        WHERE albumId = #{albumId}
+    </select>
+
+    <select id="getPhotoById" parameterType="long" resultType="com.shishuo.cms.entity.Photo">
+        SELECT *
+        FROM photo
+        WHERE id = #{id}
+    </select>
+</mapper>

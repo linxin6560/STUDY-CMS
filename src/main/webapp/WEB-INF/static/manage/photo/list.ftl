@@ -1,5 +1,5 @@
 <#assign menu="album">
-<#assign submenu="album_list">
+<#assign submenu="photo_list">
 <#include "/manage/head.ftl">
 <style type="text/css">
     .photo_album {
@@ -37,23 +37,24 @@
             <header class="panel-heading" style="font-size: 18px;">
                 <div class="row">
                     <div class="col-lg-4">
-                        <p>相册列表</p>
+                        <p>照片列表</p>
                     </div>
                     <div class="col-lg-8">
                         <a class="btn btn-primary" style="float:right;"
-                           href="${BASE_PATH}/manage/album/add.htm">增加相册</a>
+                           href="${BASE_PATH}/manage/photo/add.htm">增加照片</a>
                     </div>
                 </div>
             </header>
             <ul class="breadcrumb photo_album clear">
-            <#list albumPage.list as album>
+            <#list photoPage.list as photo>
                 <li>
-                    <div class="mydiv">
-                        <a href="${BASE_PATH}/manage/photo/list.htm?album_id=${album.id}">
-                            <img src="${BASE_PATH}/${album.cover}" style="height:155px;width: 160px">
-                            <span style="font-size: 18px;">${album.title}</span>
-                        </a>
-                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="${BASE_PATH}/${photo.filename}" data-lightbox="gallery" data-title="Bald Eagle">
+                                <img src="${BASE_PATH}/${photo.filename}" class="img-thumbnail" alt="">
+                            </a>
+                            <div class="title">${photo.title}</div>
+                        </div>
                 </li>
             </#list>
             </ul>

@@ -1,7 +1,7 @@
 package com.shishuo.cms.service;
 
-import com.shishuo.cms.dao.AlbumDao;
-import com.shishuo.cms.entity.Album;
+import com.shishuo.cms.dao.PhotoDao;
+import com.shishuo.cms.entity.Photo;
 import com.shishuo.cms.entity.vo.PageVo;
 import com.shishuo.cms.exception.AuthException;
 import com.shishuo.cms.util.MediaUtils;
@@ -14,31 +14,31 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 相册
- * Created by Administrator on 2016/10/27.
+ * Created by Administrator on 2016/11/23.
  */
 @Service
-public class AlbumService {
+public class PhotoService {
 
     @Autowired
-    private AlbumDao albumDao;
+    private PhotoDao photoDao;
 
     /**
      * 添加管理员
      *
-     * @param title
+     * @param albumId
      * @param file
      * @return Album
      */
-    public Album addAlbum(String title, MultipartFile file) throws AuthException, IOException {
-        String cover = MediaUtils.saveImage(file, 0, 0);
+    public Photo addPhoto(int albumId, MultipartFile file) throws AuthException, IOException {
+        String filename = MediaUtils.saveImage(file, 0, 0);
         Date now = new Date();
-        Album album = new Album();
-        album.setTitle(title);
-        album.setCover(cover);
-        album.setCreateTime(now);
-        albumDao.addAlbum(album);
-        return album;
+        Photo photo = new Photo();
+        photo.setTitle(file.getName());
+        photo.setAlbumId(albumId);
+        photo.setFilename(filename);
+        photo.setCreateTime(now);
+        photoDao.addPhoto(photo);
+        return photo;
     }
 
     // ///////////////////////////////
@@ -52,7 +52,7 @@ public class AlbumService {
      * @return Integer
      */
     public int deletePhoto(long id) {
-        return albumDao.deleteAlbum(id);
+        return photoDao.deletePhoto(id);
     }
 
     // ///////////////////////////////
@@ -67,8 +67,8 @@ public class AlbumService {
      * @throws AuthException
      */
 
-    public void updateAlbumById(long id, String title, String cover) throws AuthException {
-        albumDao.updateAlbumById(id, title, cover);
+    public void updatePhotoById(long id, String title, String cover) throws AuthException {
+        photoDao.updatePhotoById(id, title, cover);
     }
 
     // ///////////////////////////////
@@ -78,8 +78,8 @@ public class AlbumService {
     /**
      * 通过Id获得指定管理员资料
      */
-    public Album getAlbumById(long id) {
-        return albumDao.getAlbumById(id);
+    public Photo getPhotoById(long id) {
+        return photoDao.getPhotoById(id);
     }
 
     /**
@@ -89,8 +89,8 @@ public class AlbumService {
      * @param rows
      * @return List<Admin>
      */
-    public List<Album> getAllList(long offset, long rows) {
-        return albumDao.getAllList(offset, rows);
+    public List<Photo> getAllList(int albumId, long offset, long rows) {
+        return photoDao.getAllList(albumId, offset, rows);
     }
 
     /**
@@ -98,8 +98,8 @@ public class AlbumService {
      *
      * @return Integer
      */
-    public int getAllListCount() {
-        return albumDao.getAllListCount();
+    public int getAllListCount(int albumId) {
+        return photoDao.getAllListCount(albumId);
     }
 
     /**
@@ -108,12 +108,12 @@ public class AlbumService {
      * @param pageNum
      * @return PageVo<Admin>
      */
-    public PageVo<Album> getAllListPage(int pageNum) {
-        PageVo<Album> pageVo = new PageVo<Album>(pageNum);
+    public PageVo<Photo> getAllListPage(int albumId, int pageNum) {
+        PageVo<Photo> pageVo = new PageVo<Photo>(pageNum);
         pageVo.setRows(20);
-        List<Album> list = this.getAllList(pageVo.getOffset(), pageVo.getRows());
+        List<Photo> list = getAllList(albumId, pageVo.getOffset(), pageVo.getRows());
         pageVo.setList(list);
-        pageVo.setCount(this.getAllListCount());
+        pageVo.setCount(getAllListCount(albumId));
         return pageVo;
     }
 }
