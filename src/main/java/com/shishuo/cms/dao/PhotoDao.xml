@@ -13,8 +13,8 @@
 
     <insert id="addPhoto" parameterType="com.shishuo.cms.entity.Photo">
         insert into
-        photo(title,filename,photoId,createTime)
-        value(#{title},#{filename},#{photoId},#{createTime})
+        photo(title,filename,albumId,createTime)
+        value(#{title},#{filename},#{albumId},#{createTime})
         <selectKey resultType="int" keyProperty="id">
             SELECT
             LAST_INSERT_ID()

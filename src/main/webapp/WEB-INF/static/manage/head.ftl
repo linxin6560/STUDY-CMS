@@ -27,6 +27,8 @@
     <link href="${BASE_PATH}/static/manage/assets/uploadify/uploadify.css?v=${config_v}" rel="stylesheet"/>
     <link href="${BASE_PATH}/static/manage/assets/bootstrap.datetimepicker/css/bootstrap-datetimepicker.min.css?v=${config_v}"
           rel="stylesheet"/>
+    <link href="${BASE_PATH}/static/manage/css/dropzone.css" rel="stylesheet">
+    <link href="${BASE_PATH}/static/manage/css/lightbox.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>

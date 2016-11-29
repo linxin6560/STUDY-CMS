@@ -3,31 +3,14 @@
 <#include "/manage/head.ftl">
 <style type="text/css">
     .photo_album {
-        width: 800px;
-        padding: 10px;
+        padding: 20px;
     }
 
-    .clear {
-        zoom: 1;
-    }
-
-    .mydiv {
-        margin: 10px;
-        padding: 5px;
-        width: 170px;
-        background: #fff;
-        vertical-align: middle;
-        filter: progid:DXImageTransform.Microsoft.Shadow(color=#909090, direction=120, strength=3); /*ie*/
-        -moz-box-shadow: 2px 2px 10px #909090; /*firefox*/
-        -webkit-box-shadow: 2px 2px 10px #909090; /*safari或chrome*/
-        box-shadow: 2px 2px 10px #909090; /*opera或ie9*/
-    }
-
-    .pagination {
-        border-radius: 4px;
-        display: inline-block;
-        margin: 0;
-        padding-left: 0;
+    .title {
+        text-align: center;
+        font-size: 14px;
+        margin-bottom: 20px;
+        font-weight: bold;
     }
 </style>
 <section id="main-content">
@@ -39,26 +22,41 @@
                     <div class="col-lg-4">
                         <p>照片列表</p>
                     </div>
-                    <div class="col-lg-8">
-                        <a class="btn btn-primary" style="float:right;"
-                           href="${BASE_PATH}/manage/photo/add.htm">增加照片</a>
-                    </div>
+                </div>
+                <div class="panel-body">
+                    <form id="add_photo_form"
+                          action="${BASE_PATH}/manage/photo/add.json?album_id=${album_id}"
+                          class="dropzone"></form>
                 </div>
             </header>
-            <ul class="breadcrumb photo_album clear">
+            <div class="row photo_album">
             <#list photoPage.list as photo>
-                <li>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <a href="${BASE_PATH}/${photo.filename}" data-lightbox="gallery" data-title="Bald Eagle">
-                                <img src="${BASE_PATH}/${photo.filename}" class="img-thumbnail" alt="">
-                            </a>
-                            <div class="title">${photo.title}</div>
-                        </div>
-                </li>
+                <div class="col-md-3">
+                    <a href="${BASE_PATH}/${photo.filename}" data-lightbox="gallery" data-title="${photo.title}">
+                        <img src="${BASE_PATH}/${photo.filename}" style="height:160px;width: 220px"
+                             class="img-thumbnail" alt="">
+                    </a>
+                    <div class="title">${photo.title}</div>
+                </div>
             </#list>
-            </ul>
+            </div>
         </section>
     </section>
 </section>
+<script type="text/javascript">
+    $(function () {
+        $('#add_photo_form').ajaxForm({
+            dataType: 'json',
+            success: function (data) {
+                if (data.result) {
+                    bootbox.alert("保存成功，将刷新页面", function () {
+                        window.location.reload();
+                    });
+                } else {
+                    showErrors($('#add_album_form'), data.errors);
+                }
+            }
+        });
+    });
+</script>
 <#include "/manage/foot.ftl">

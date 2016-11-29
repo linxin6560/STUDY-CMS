@@ -4,6 +4,8 @@ import com.shishuo.cms.entity.Photo;
 import com.shishuo.cms.entity.vo.JsonVo;
 import com.shishuo.cms.entity.vo.PageVo;
 import com.shishuo.cms.exception.FolderNotFoundException;
+import net.sf.json.JSONException;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.PrintWriter;
 
 /**
  * 照片
@@ -22,6 +25,13 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/manage/photo")
 public class ManagePhotoAction extends ManageBaseAction {
 
+    private static final String FILE_NAME_FIELD = "name";
+    private static final String FILE_SIZE_FIELD = "size";
+    private static final String TOKEN_FIELD = "token";
+    private static final String SERVER_FIELD = "server";
+    private static final String SUCCESS = "success";
+    private static final String MESSAGE = "message";
+
     @RequestMapping(value = "/list.htm", method = RequestMethod.GET)
     public String list(
             @RequestParam(value = "album_id") int albumId,
@@ -30,6 +40,7 @@ public class ManagePhotoAction extends ManageBaseAction {
             throws FolderNotFoundException {
         PageVo<Photo> pageVo = photoService.getAllListPage(albumId, p);
         modelMap.put("photoPage", pageVo);
+        modelMap.put("album_id", albumId);
         return "manage/photo/list";
     }
 
@@ -37,7 +48,7 @@ public class ManagePhotoAction extends ManageBaseAction {
     @RequestMapping(value = "/add.json", method = RequestMethod.POST)
     public JsonVo<Photo> add(@RequestParam(value = "album_id") int albumId,
                              @RequestParam(value = "file") MultipartFile file,
-                             HttpServletRequest request, ModelMap modelMap) {
+                             HttpServletRequest req, ModelMap modelMap) {
         JsonVo<Photo> jsonVo = new JsonVo<Photo>();
         try {
             if (file == null || file.isEmpty()) {

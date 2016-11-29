@@ -33,7 +33,7 @@ public class PhotoService {
         String filename = MediaUtils.saveImage(file, 0, 0);
         Date now = new Date();
         Photo photo = new Photo();
-        photo.setTitle(file.getName());
+        photo.setTitle(file.getOriginalFilename());
         photo.setAlbumId(albumId);
         photo.setFilename(filename);
         photo.setCreateTime(now);

@@ -3,18 +3,13 @@
 <#include "/manage/head.ftl">
 <style type="text/css">
     .photo_album {
-        width: 800px;
-        padding: 10px;
-    }
-
-    .clear {
-        zoom: 1;
+        padding: 20px;
     }
 
     .mydiv {
+        text-align: center;
         margin: 10px;
         padding: 5px;
-        width: 170px;
         background: #fff;
         vertical-align: middle;
         filter: progid:DXImageTransform.Microsoft.Shadow(color=#909090, direction=120, strength=3); /*ie*/
@@ -23,11 +18,11 @@
         box-shadow: 2px 2px 10px #909090; /*opera或ie9*/
     }
 
-    .pagination {
-        border-radius: 4px;
-        display: inline-block;
-        margin: 0;
-        padding-left: 0;
+    .title {
+        text-align: center;
+        font-size: 14px;
+        margin-bottom: 20px;
+        font-weight: bold;
     }
 </style>
 <section id="main-content">
@@ -45,16 +40,14 @@
                     </div>
                 </div>
             </header>
-            <ul class="breadcrumb photo_album clear">
+            <ul class="row photo_album">
             <#list albumPage.list as album>
-                <li>
-                    <div class="mydiv">
-                        <a href="${BASE_PATH}/manage/photo/list.htm?album_id=${album.id}">
-                            <img src="${BASE_PATH}/${album.cover}" style="height:155px;width: 160px">
-                            <span style="font-size: 18px;">${album.title}</span>
-                        </a>
-                    </div>
-                </li>
+                <ui class="col-md-3 mydiv">
+                    <a href="${BASE_PATH}/manage/photo/list.htm?album_id=${album.id}">
+                        <img src="${BASE_PATH}/${album.cover}" style="height:160px;width: 220px">
+                    </a>
+                    <div class="title">${album.title}</div>
+                </ui>
             </#list>
             </ul>
         </section>

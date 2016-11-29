@@ -15,5 +15,7 @@
     	<script type="text/javascript" charset="utf-8" src="${BASE_PATH}/static/manage/assets/uploadify/jquery.uploadify.min.js?v=${config_v}"></script>
 	<!--common script for all pages-->
 	<script src="${BASE_PATH}/static/manage/js/common-scripts.js"></script>
+    <script src="${BASE_PATH}/static/manage/js/dropzone.js"></script>
+    <script src="${BASE_PATH}/static/manage/js/lightbox.js"></script>
 </body>
 </html>
