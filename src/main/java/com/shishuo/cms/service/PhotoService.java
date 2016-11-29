@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -110,7 +111,7 @@ public class PhotoService {
      */
     public PageVo<Photo> getAllListPage(int albumId, int pageNum) {
         PageVo<Photo> pageVo = new PageVo<Photo>(pageNum);
-        pageVo.setRows(20);
+        pageVo.setRows(12);
         List<Photo> list = getAllList(albumId, pageVo.getOffset(), pageVo.getRows());
         pageVo.setList(list);
         pageVo.setCount(getAllListCount(albumId));

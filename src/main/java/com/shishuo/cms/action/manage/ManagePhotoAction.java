@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
+import java.util.HashMap;
 
 /**
  * 照片
@@ -25,20 +26,16 @@ import java.io.PrintWriter;
 @RequestMapping("/manage/photo")
 public class ManagePhotoAction extends ManageBaseAction {
 
-    private static final String FILE_NAME_FIELD = "name";
-    private static final String FILE_SIZE_FIELD = "size";
-    private static final String TOKEN_FIELD = "token";
-    private static final String SERVER_FIELD = "server";
-    private static final String SUCCESS = "success";
-    private static final String MESSAGE = "message";
-
     @RequestMapping(value = "/list.htm", method = RequestMethod.GET)
     public String list(
             @RequestParam(value = "album_id") int albumId,
             @RequestParam(value = "p", defaultValue = "0") int p,
             ModelMap modelMap, HttpServletRequest request)
             throws FolderNotFoundException {
+        HashMap<String, String> args = new HashMap<String, String>();
+        args.put("album_id", String.valueOf(albumId));
         PageVo<Photo> pageVo = photoService.getAllListPage(albumId, p);
+        pageVo.setArgs(args);
         modelMap.put("photoPage", pageVo);
         modelMap.put("album_id", albumId);
         return "manage/photo/list";

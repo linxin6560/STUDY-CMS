@@ -2,8 +2,17 @@
 <#assign submenu="photo_list">
 <#include "/manage/head.ftl">
 <style type="text/css">
+    .pagination {
+        border-radius: 4px;
+        display: inline-block;
+        margin: 0;
+        padding-left: 0;
+    }
+
     .photo_album {
-        padding: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
     }
 
     .title {
@@ -43,6 +52,9 @@
                           class="dropzone"></form>
                 </div>
             </header>
+            <div style="height: 30px;margin: 20px;">
+                <div class="pagination">${photoPage.pageNumHtml}</div>
+            </div>
             <div class="row photo_album">
             <#list photoPage.list as photo>
                 <div class="col-md-3 mydiv">

@@ -32,6 +32,7 @@ public class ManageAlbumAction extends ManageBaseAction {
             throws FolderNotFoundException {
         PageVo<Album> pageVo = albumService.getAllListPage(p);
         modelMap.put("albumPage", pageVo);
+        System.out.println("html="+pageVo.getPageNumHtml());
         return "manage/album/list";
     }
 

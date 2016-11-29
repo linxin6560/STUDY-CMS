@@ -3,7 +3,9 @@
 <#include "/manage/head.ftl">
 <style type="text/css">
     .photo_album {
-        padding: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
     }
 
     .mydiv {
@@ -41,6 +43,9 @@
                     </div>
                 </div>
             </header>
+            <div style="height: 30px; margin: 20px;">
+                <div class="pagination">${albumPage.pageNumHtml}</div>
+            </div>
             <div class="row photo_album">
             <#list albumPage.list as album>
                 <div class="col-md-3 mydiv">

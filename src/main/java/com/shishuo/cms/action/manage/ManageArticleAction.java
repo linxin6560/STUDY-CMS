@@ -54,8 +54,7 @@ public class ManageArticleAction extends ManageBaseAction {
                       @RequestParam(value = "folderId", defaultValue = "0") long folderId)
             throws FolderNotFoundException {
         Admin admin = this.getAdmin(request);
-        modelMap.put("folderAll",
-                folderService.getAllFolderList(admin.getAdminId()));
+        modelMap.put("folderAll", folderService.getAllFolderList(admin.getAdminId()));
         modelMap.put("folderId", folderId);
         return "manage/article/add";
     }
@@ -74,9 +73,13 @@ public class ManageArticleAction extends ManageBaseAction {
             throws UploadException, ParseException {
         JsonVo<Article> json = new JsonVo<Article>();
         try {
-            Article article = articleService.addArticle(folderId, this
-                            .getAdmin(request).getAdminId(), SSUtils.toText(title
-                            .trim()), SSUtils.toText(summary), status, content, file,
+            Article article = articleService.addArticle(folderId,
+                    this.getAdmin(request).getAdminId(),
+                    SSUtils.toText(title.trim()),
+                    SSUtils.toText(summary),
+                    status,
+                    content,
+                    file,
                     createTime);
             json.setT(article);
             json.setResult(true);
@@ -104,18 +107,11 @@ public class ManageArticleAction extends ManageBaseAction {
             HttpServletRequest request, ModelMap modelMap)
             throws FolderNotFoundException {
         Admin admin = this.getAdmin(request);
-        List<FolderVo> pathList = folderService
-                .getFolderPathListByFolderId(folderId);
-        PageVo<ArticleVo> pageVo = articleService.getArticlePageByFolderId(
-                admin.getAdminId(), folderId, check, pageNum);
-        int initCount = articleService.getArticleCountByAdminIdAndFolderId(
-                admin.getAdminId(), 0, ArticleConstant.check.init);
-        int noCount = articleService.getArticleCountByAdminIdAndFolderId(
-                admin.getAdminId(), 0, ArticleConstant.check.no);
-        int allCount = initCount
-                + noCount
-                + articleService.getArticleCountByAdminIdAndFolderId(
-                admin.getAdminId(), 0, ArticleConstant.check.yes);
+        List<FolderVo> pathList = folderService.getFolderPathListByFolderId(folderId);
+        PageVo<ArticleVo> pageVo = articleService.getArticlePageByFolderId(admin.getAdminId(), folderId, check, pageNum);
+        int initCount = articleService.getArticleCountByAdminIdAndFolderId(admin.getAdminId(), 0, ArticleConstant.check.init);
+        int noCount = articleService.getArticleCountByAdminIdAndFolderId(admin.getAdminId(), 0, ArticleConstant.check.no);
+        int allCount = initCount + noCount + articleService.getArticleCountByAdminIdAndFolderId(admin.getAdminId(), 0, ArticleConstant.check.yes);
         modelMap.put("pathList", pathList);
         modelMap.put("folderId", folderId);
         modelMap.put("pageVo", pageVo);
@@ -123,6 +119,7 @@ public class ManageArticleAction extends ManageBaseAction {
         modelMap.put("initCount", initCount);
         modelMap.put("noCount", noCount);
         modelMap.put("allCount", allCount);
+        System.out.println("html="+pageVo.getPageNumHtml());
         return "manage/article/list";
     }
 
