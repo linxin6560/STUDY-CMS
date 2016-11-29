@@ -21,8 +21,9 @@
     .title {
         text-align: center;
         font-size: 14px;
-        margin-bottom: 20px;
         font-weight: bold;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 </style>
 <section id="main-content">
@@ -40,16 +41,18 @@
                     </div>
                 </div>
             </header>
-            <ul class="row photo_album">
+            <div class="row photo_album">
             <#list albumPage.list as album>
-                <ui class="col-md-3 mydiv">
+                <div class="col-md-3 mydiv">
                     <a href="${BASE_PATH}/manage/photo/list.htm?album_id=${album.id}">
                         <img src="${BASE_PATH}/${album.cover}" style="height:160px;width: 220px">
                     </a>
                     <div class="title">${album.title}</div>
-                </ui>
+                    <a role="menuitem" tabindex="-1" href="#">编辑</a>
+                    <a role="menuitem" tabindex="-1" href="#">删除</a>
+                </div>
             </#list>
-            </ul>
+            </div>
         </section>
     </section>
 </section>

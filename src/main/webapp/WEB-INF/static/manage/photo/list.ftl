@@ -9,8 +9,22 @@
     .title {
         text-align: center;
         font-size: 14px;
-        margin-bottom: 20px;
         font-weight: bold;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .mydiv {
+        text-align: center;
+        margin: 10px;
+        width: 220px;
+        padding: 10px;
+        background: #fff;
+        vertical-align: middle;
+        filter: progid:DXImageTransform.Microsoft.Shadow(color=#909090, direction=120, strength=3); /*ie*/
+        -moz-box-shadow: 2px 2px 10px #909090; /*firefox*/
+        -webkit-box-shadow: 2px 2px 10px #909090; /*safari或chrome*/
+        box-shadow: 2px 2px 10px #909090; /*opera或ie9*/
     }
 </style>
 <section id="main-content">
@@ -31,12 +45,13 @@
             </header>
             <div class="row photo_album">
             <#list photoPage.list as photo>
-                <div class="col-md-3">
+                <div class="col-md-3 mydiv">
                     <a href="${BASE_PATH}/${photo.filename}" data-lightbox="gallery" data-title="${photo.title}">
-                        <img src="${BASE_PATH}/${photo.filename}" style="height:160px;width: 220px"
-                             class="img-thumbnail" alt="">
+                        <img src="${BASE_PATH}/${photo.filename}" style="height:140px;width: 200px" alt="">
                     </a>
                     <div class="title">${photo.title}</div>
+                    <a role="menuitem" tabindex="-1" href="#">编辑</a>
+                    <a role="menuitem" tabindex="-1" href="#">删除</a>
                 </div>
             </#list>
             </div>
