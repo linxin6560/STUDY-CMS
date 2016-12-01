@@ -67,12 +67,13 @@ public class AlbumService {
      * @throws AuthException
      */
 
-    public Album updateAlbumById(long id, String title, String file) throws AuthException, IOException {
+    public Album updateAlbumById(long id, String title, String cover) throws AuthException, IOException {
         Album album = albumDao.getAlbumById(id);
-        if (file != null) {
-            album.setCover(file);
+        if (cover != null) {
+            album.setCover(cover);
         }
         album.setTitle(title);
+        System.out.println("album.title=" + album.getTitle() + ",cover=" + album.getCover());
         albumDao.updateAlbumById(album);
         return album;
     }

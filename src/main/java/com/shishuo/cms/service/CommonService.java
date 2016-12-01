@@ -32,30 +32,20 @@ public class CommonService {
     /***
      *
      * <p>功能描述：上传图片</p>
-     * <p>创建人：guopengjie</p>
-     * <p>创建日期：2015年12月30日 上午11:39:28</p>
      *
-     * @param request
-     * @param response
+     * @param file
      * @return
      */
-    public String upload(MultipartHttpServletRequest request, HttpServletResponse response) {
+    public String upload(MultipartFile file) {
         JSONObject jsonObject = new JSONObject();
-        String result = "";
         try {
-            Iterator<String> itr = request.getFileNames();
-            MultipartFile file;
-            while (itr.hasNext()) {
-                file = request.getFile(itr.next());
-                String fileName = MediaUtils.save(file);
-                jsonObject.put("fileName", fileName);
-            }
+            String fileName = MediaUtils.save(file);
+            jsonObject.put("fileName", fileName);
         } catch (Exception e) {
             log.error("上传图片异常", e);
             jsonObject.put("e", e.getMessage());
         }
-        result = jsonObject.toString();
-        System.out.println("result="+result);
-        return result;
+        log.debug("上传结果：" + jsonObject);
+        return jsonObject.toString();
     }
 }

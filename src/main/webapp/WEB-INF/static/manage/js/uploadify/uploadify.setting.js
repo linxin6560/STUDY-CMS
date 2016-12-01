@@ -7,6 +7,7 @@ function singleImage(id, imageShow, imageHidden) {
         'height': 27,
         'width': 80,
         'buttonText': '选择图片',
+        'fileObjName': 'file',
         'swf': '/static/manage/js/uploadify/uploadify.swf',
         'uploader': '/common/upload',
         'auto': true,

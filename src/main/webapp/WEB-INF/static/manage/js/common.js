@@ -41,35 +41,12 @@ $(function () {
 });
 //将form转为AJAX提交
 function ajaxSubmit(frm, fn) {
-    var dataPara = getFormJson(frm);
     var option = {
         url: frm.attr("action"),
         type: frm.attr("method"),
-        data: dataPara,
         success: fn
     };
     frm.ajaxSubmit(option);
-    // var dataPara = getFormJson(frm);
-    // $.ajax({
-    //     url: frm.attr("action"),
-    //     type: frm.attr("method"),
-    //     data: dataPara,
-    //     success: fn
-    // });
-}
-//将form中的值转换为键值对。
-function getFormJson(frm) {
-    var o = {};
-    var a = $(frm).serializeArray();
-    $.each(a, function () {
-        if (o[this.name] != undefined) {
-            o[this.name] = o[this.name] + ',' + (this.value || '');
-        } else {
-            o[this.name] = this.value || '';
-        }
-    });
-
-    return o;
 }
 function getCookie(name) {
     var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");

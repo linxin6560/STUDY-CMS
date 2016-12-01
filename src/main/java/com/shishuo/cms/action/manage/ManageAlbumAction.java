@@ -46,7 +46,7 @@ public class ManageAlbumAction extends ManageBaseAction {
     @ResponseBody
     @RequestMapping(value = "/add.json", method = RequestMethod.POST)
     public JsonVo<Album> add(@RequestParam(value = "title") String title,
-                             @RequestParam(value = "file") MultipartFile file,
+                             @RequestParam(value = "cover") MultipartFile file,
                              HttpServletRequest request, ModelMap modelMap) {
         JsonVo<Album> jsonVo = new JsonVo<Album>();
         try {
@@ -85,16 +85,17 @@ public class ManageAlbumAction extends ManageBaseAction {
     @RequestMapping(value = "/update.json", method = RequestMethod.POST)
     public JsonVo<Album> update(@RequestParam(value = "albumId") long albumId,
                                 @RequestParam(value = "title") String title,
-                                @RequestParam(value = "pic", required = false) String file,
+                                @RequestParam(value = "pic", required = false) String cover,
                                 HttpServletRequest request, ModelMap modelMap) {
         JsonVo<Album> jsonVo = new JsonVo<Album>();
         try {
             if (StringUtils.isEmpty(title)) {
                 jsonVo.getErrors().put("titleError", "标题不能为空");
             }
+            System.out.println("title=" + title + ",cover=" + cover);
             jsonVo.check();
             jsonVo.setResult(true);
-            Album album = albumService.updateAlbumById(albumId, title, file);
+            Album album = albumService.updateAlbumById(albumId, title, cover);
             jsonVo.setT(album);
         } catch (Exception e) {
             e.printStackTrace();
