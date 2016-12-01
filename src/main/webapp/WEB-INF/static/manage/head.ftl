@@ -24,7 +24,7 @@
     <!-- Custom styles for this template -->
     <link href="${BASE_PATH}/static/manage/css/style.css?v=${config_v}" rel="stylesheet">
     <link href="${BASE_PATH}/static/manage/css/style-responsive.css?v=${config_v}" rel="stylesheet"/>
-    <link href="${BASE_PATH}/static/manage/assets/uploadify/uploadify.css?v=${config_v}" rel="stylesheet"/>
+    <link href="${BASE_PATH}/static/manage/js/uploadify/uploadify.css" rel="stylesheet"/>
     <link href="${BASE_PATH}/static/manage/assets/bootstrap.datetimepicker/css/bootstrap-datetimepicker.min.css?v=${config_v}"
           rel="stylesheet"/>
     <link href="${BASE_PATH}/static/manage/css/dropzone.css" rel="stylesheet">

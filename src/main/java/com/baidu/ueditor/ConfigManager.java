@@ -43,8 +43,7 @@ public final class ConfigManager {
 
         this.rootPath = rootPath;
         this.contextPath = contextPath;
-        this.originalPath = this.rootPath + "/WEB-INF/classes/"
-                + configFileName;
+        this.originalPath = this.rootPath + "/WEB-INF/classes/" + configFileName;
         this.initEnv();
 
     }

@@ -3,7 +3,9 @@ package com.shishuo.cms.action.manage;
 import com.shishuo.cms.entity.Photo;
 import com.shishuo.cms.entity.vo.JsonVo;
 import com.shishuo.cms.entity.vo.PageVo;
+import com.shishuo.cms.exception.ArticleNotFoundException;
 import com.shishuo.cms.exception.FolderNotFoundException;
+import com.shishuo.cms.util.MediaUtils;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 照片
@@ -28,22 +31,22 @@ public class ManagePhotoAction extends ManageBaseAction {
 
     @RequestMapping(value = "/list.htm", method = RequestMethod.GET)
     public String list(
-            @RequestParam(value = "album_id") int albumId,
+            @RequestParam(value = "albumId") int albumId,
             @RequestParam(value = "p", defaultValue = "0") int p,
             ModelMap modelMap, HttpServletRequest request)
             throws FolderNotFoundException {
         HashMap<String, String> args = new HashMap<String, String>();
-        args.put("album_id", String.valueOf(albumId));
+        args.put("albumId", String.valueOf(albumId));
         PageVo<Photo> pageVo = photoService.getAllListPage(albumId, p);
         pageVo.setArgs(args);
         modelMap.put("photoPage", pageVo);
-        modelMap.put("album_id", albumId);
+        modelMap.put("albumId", albumId);
         return "manage/photo/list";
     }
 
     @ResponseBody
     @RequestMapping(value = "/add.json", method = RequestMethod.POST)
-    public JsonVo<Photo> add(@RequestParam(value = "album_id") int albumId,
+    public JsonVo<Photo> add(@RequestParam(value = "albumId") int albumId,
                              @RequestParam(value = "file") MultipartFile file,
                              HttpServletRequest req, ModelMap modelMap) {
         JsonVo<Photo> jsonVo = new JsonVo<Photo>();
@@ -60,5 +63,22 @@ public class ManagePhotoAction extends ManageBaseAction {
             jsonVo.setResult(false);
         }
         return jsonVo;
+    }
+
+    /**
+     * @throws ArticleNotFoundException
+     * @author 彻底删除文件
+     */
+    @ResponseBody
+    @RequestMapping(value = "/delete.json", method = RequestMethod.POST)
+    public JsonVo<String> deleteFile(@RequestParam(value = "photoId") int photoId)
+            throws ArticleNotFoundException {
+        JsonVo<String> json = new JsonVo<String>();
+        // 删除文件系统
+        Photo photo = photoService.getPhotoById(photoId);
+        MediaUtils.deleteFile(photo.getFilename());
+        photoService.deletePhoto(photoId);
+        json.setResult(true);
+        return json;
     }
 }

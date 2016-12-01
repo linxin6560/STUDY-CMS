@@ -119,7 +119,6 @@ public class ManageArticleAction extends ManageBaseAction {
         modelMap.put("initCount", initCount);
         modelMap.put("noCount", noCount);
         modelMap.put("allCount", allCount);
-        System.out.println("html="+pageVo.getPageNumHtml());
         return "manage/article/list";
     }
 
@@ -135,25 +134,26 @@ public class ManageArticleAction extends ManageBaseAction {
         Admin admin = this.getAdmin(request);
         ArticleVo article = articleService.getArticleById(articleId);
         modelMap.put("article", article);
-        modelMap.put("folderAll",
-                folderService.getAllFolderList(admin.getAdminId()));
+        modelMap.put("folderAll", folderService.getAllFolderList(admin.getAdminId()));
         modelMap.put("JSESSIONID", request.getSession().getId());
         return "manage/article/update";
     }
 
     /**
-     * @param fileId
+     * 修改文章资料
+     *
+     * @param articleId
      * @param folderId
-     * @param name
-     * @param titile
+     * @param title
+     * @param summary
+     * @param createTime
      * @param content
-     * @param description
      * @param status
+     * @param file
      * @param request
      * @param modelMap
      * @return
      * @throws ParseException
-     * @author 修改文章资料
      */
     @ResponseBody
     @RequestMapping(value = "/update.json", method = RequestMethod.POST)
@@ -204,11 +204,9 @@ public class ManageArticleAction extends ManageBaseAction {
         JsonVo<String> json = new JsonVo<String>();
         // 删除文件系统
         articleService.deleteArticleById(articleId);
-        List<Media> attachmentList = attachmentService.getMediaPageByKindId(
-                articleId, MediaConstant.Kind.article, 1000, 1).getList();
+        List<Media> attachmentList = attachmentService.getMediaPageByKindId(articleId, MediaConstant.Kind.article, 1000, 1).getList();
         for (Media attachment : attachmentList) {
-            attachmentService.deleteMedia(attachment.getMediaId(),
-                    attachment.getPath());
+            attachmentService.deleteMedia(attachment.getMediaId(), attachment.getPath());
         }
         json.setResult(true);
         return json;

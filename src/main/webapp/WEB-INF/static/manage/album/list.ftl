@@ -49,12 +49,13 @@
             <div class="row photo_album">
             <#list albumPage.list as album>
                 <div class="col-md-3 mydiv">
-                    <a href="${BASE_PATH}/manage/photo/list.htm?album_id=${album.id}">
+                    <a href="${BASE_PATH}/manage/photo/list.htm?albumId=${album.id}">
                         <img src="${BASE_PATH}/${album.cover}" style="height:160px;width: 220px">
                     </a>
                     <div class="title">${album.title}</div>
-                    <a role="menuitem" tabindex="-1" href="#">编辑</a>
-                    <a role="menuitem" tabindex="-1" href="#">删除</a>
+                    <a href="${BASE_PATH}/manage/album/update.htm?albumId=${album.id}">编辑</a>
+                    |
+                    <a href="javascript:void(0);" class="js_album_delete" albumId="${album.id}" title="是否删除相册">删除</a>
                 </div>
             </#list>
             </div>
@@ -62,3 +63,32 @@
     </section>
 </section>
 <#include "/manage/foot.ftl">
+<script>
+    $(function () {
+        $('.js_album_delete').click(function () {
+            var albumId = $(this).attr('albumId');
+            bootbox.dialog({
+                message: $(this).attr('title'),
+                title: "提示",
+                buttons: {
+                    "delete": {
+                        label: "确定",
+                        className: "btn-success",
+                        callback: function () {
+                            $.post("${BASE_PATH}/manage/album/delete.json", {"albumId": albumId}, function (data) {
+                                window.location.reload();
+                            }, "json");
+                        }
+                    },
+                    "cancel": {
+                        label: "取消",
+                        className: "btn-primary",
+                        callback: function () {
+
+                        }
+                    }
+                }
+            });
+        });
+    });
+</script>

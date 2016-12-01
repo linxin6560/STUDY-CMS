@@ -51,7 +51,7 @@ public class AlbumService {
      * @param id
      * @return Integer
      */
-    public int deletePhoto(long id) {
+    public int deleteAlbum(long id) {
         return albumDao.deleteAlbum(id);
     }
 
@@ -67,8 +67,14 @@ public class AlbumService {
      * @throws AuthException
      */
 
-    public void updateAlbumById(long id, String title, String cover) throws AuthException {
-        albumDao.updateAlbumById(id, title, cover);
+    public Album updateAlbumById(long id, String title, String file) throws AuthException, IOException {
+        Album album = albumDao.getAlbumById(id);
+        if (file != null) {
+            album.setCover(file);
+        }
+        album.setTitle(title);
+        albumDao.updateAlbumById(album);
+        return album;
     }
 
     // ///////////////////////////////

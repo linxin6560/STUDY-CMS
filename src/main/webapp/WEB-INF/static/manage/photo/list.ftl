@@ -48,7 +48,7 @@
                 </div>
                 <div class="panel-body">
                     <form id="add_photo_form"
-                          action="${BASE_PATH}/manage/photo/add.json?album_id=${album_id}"
+                          action="${BASE_PATH}/manage/photo/add.json?albumId=${albumId}"
                           class="dropzone"></form>
                 </div>
             </header>
@@ -63,7 +63,8 @@
                     </a>
                     <div class="title">${photo.title}</div>
                     <a role="menuitem" tabindex="-1" href="#">编辑</a>
-                    <a role="menuitem" tabindex="-1" href="#">删除</a>
+                    |
+                    <a href="javascript:void(0);" class="js_photo_delete" photoId="${photo.id}" title="是否删除照片">删除</a>
                 </div>
             </#list>
             </div>
@@ -83,6 +84,35 @@
                     showErrors($('#add_album_form'), data.errors);
                 }
             }
+        });
+    });
+</script>
+<script>
+    $(function () {
+        $('.js_photo_delete').click(function () {
+            var photoId = $(this).attr('photoId');
+            bootbox.dialog({
+                message: $(this).attr('title'),
+                title: "提示",
+                buttons: {
+                    "delete": {
+                        label: "确定",
+                        className: "btn-success",
+                        callback: function () {
+                            $.post("${BASE_PATH}/manage/photo/delete.json", {"photoId": photoId}, function (data) {
+                                window.location.reload();
+                            }, "json");
+                        }
+                    },
+                    "cancel": {
+                        label: "取消",
+                        className: "btn-primary",
+                        callback: function () {
+
+                        }
+                    }
+                }
+            });
         });
     });
 </script>

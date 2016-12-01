@@ -53,6 +53,9 @@ public class ManageBaseAction {
     @Autowired
     protected PhotoService photoService;
 
+    @Autowired
+    protected CommonService commonService;
+
     /**
      * 参数校验
      *

@@ -43,11 +43,8 @@ public interface AlbumDao {
 
     /**
      * 修改相册的信息
-     *
-     * @param title
-     * @param cover
      */
-    void updateAlbumById(@Param("id") long id, @Param("title") String title, @Param("cover") String cover);
+    void updateAlbumById(Album album);
 
     // ///////////////////////////////
     // ///// 查詢 ////////

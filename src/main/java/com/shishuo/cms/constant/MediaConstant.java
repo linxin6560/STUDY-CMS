@@ -22,7 +22,7 @@ public class MediaConstant {
 	 * @author Herbert
 	 * 
 	 */
-	public static enum Type {
+	public enum Type {
 		/**
 		 * 相册
 		 */
@@ -38,7 +38,7 @@ public class MediaConstant {
 	 * @author Herbert
 	 * 
 	 */
-	public static enum Kind {
+	public enum Kind {
 		/**
 		 * 目录
 		 */
