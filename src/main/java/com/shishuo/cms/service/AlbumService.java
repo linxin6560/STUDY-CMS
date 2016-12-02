@@ -73,7 +73,6 @@ public class AlbumService {
             album.setCover(cover);
         }
         album.setTitle(title);
-        System.out.println("album.title=" + album.getTitle() + ",cover=" + album.getCover());
         albumDao.updateAlbumById(album);
         return album;
     }

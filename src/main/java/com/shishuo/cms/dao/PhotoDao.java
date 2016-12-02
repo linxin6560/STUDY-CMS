@@ -1,5 +1,6 @@
 package com.shishuo.cms.dao;
 
+import com.shishuo.cms.entity.Album;
 import com.shishuo.cms.entity.Photo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -43,10 +44,9 @@ public interface PhotoDao {
     /**
      * 修改照片的信息
      *
-     * @param title
-     * @param cover
+     * @param photo
      */
-    void updatePhotoById(@Param("id") long id, @Param("title") String title, @Param("cover") String cover);
+    void updatePhotoById(Photo photo);
 
     // ///////////////////////////////
     // ///// 查詢 ////////

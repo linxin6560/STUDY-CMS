@@ -1,6 +1,7 @@
 package com.shishuo.cms.service;
 
 import com.shishuo.cms.dao.PhotoDao;
+import com.shishuo.cms.entity.Album;
 import com.shishuo.cms.entity.Photo;
 import com.shishuo.cms.entity.vo.PageVo;
 import com.shishuo.cms.exception.AuthException;
@@ -68,8 +69,14 @@ public class PhotoService {
      * @throws AuthException
      */
 
-    public void updatePhotoById(long id, String title, String cover) throws AuthException {
-        photoDao.updatePhotoById(id, title, cover);
+    public Photo updatePhotoById(long id, String title) throws AuthException {
+        Photo photo = photoDao.getPhotoById(id);
+        if (title != null) {
+            photo.setTitle(title);
+        }
+        photo.setTitle(title);
+        photoDao.updatePhotoById(photo);
+        return photo;
     }
 
     // ///////////////////////////////

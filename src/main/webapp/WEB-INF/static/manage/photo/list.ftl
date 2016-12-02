@@ -62,17 +62,64 @@
                         <img src="${BASE_PATH}/${photo.filename}" style="height:140px;width: 200px" alt="">
                     </a>
                     <div class="title">${photo.title}</div>
-                    <a role="menuitem" tabindex="-1" href="#">编辑</a>
+                    <a href="javascript:void(0);" onclick="updatePhoto('${photo.id}','${photo.title}');">编辑</a>
                     |
-                    <a href="javascript:void(0);" class="js_photo_delete" photoId="${photo.id}" title="是否删除照片">删除</a>
+                    <a href="javascript:void(0);" onclick="deletePhoto('${photo.id}','${photo.title}');">删除</a>
                 </div>
             </#list>
             </div>
         </section>
     </section>
 </section>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="update_photo_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="update_album_form" class="form-horizontal" action="${BASE_PATH}/manage/photo/update.json"
+                  method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">修改照片标题</h4>
+                </div>
+                <input type="hidden" name="photoId" id="photoId">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-2 col-sm-2 control-label">相册标题</label>
+                        <input type="text" style="font-size:15px;width: 300px;" class="form-control" name="title"
+                               placeholder="相册标题" id="title">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">提交更改</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 <script type="text/javascript">
     $(function () {
+        $("#update_album_form").validate({
+            rules: {
+                title: {required: true}
+            },
+            messages: {
+                title: {required: "照片名称不能为空"}
+            },
+            submitHandler: function () {
+                ajaxSubmit($("#update_album_form"), function (json) {
+                    if (json.result) {
+                        $('#update_photo_dialog').modal('hide');
+                        bootbox.alert("保存成功，将刷新页面", function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        showErrors($("#update_album_form"), data.errors);
+                    }
+                });
+                return false;
+            }
+        });
         $('#add_photo_form').ajaxForm({
             dataType: 'json',
             success: function (data) {
@@ -86,34 +133,38 @@
             }
         });
     });
-</script>
-<script>
-    $(function () {
-        $('.js_photo_delete').click(function () {
-            var photoId = $(this).attr('photoId');
-            bootbox.dialog({
-                message: $(this).attr('title'),
-                title: "提示",
-                buttons: {
-                    "delete": {
-                        label: "确定",
-                        className: "btn-success",
-                        callback: function () {
-                            $.post("${BASE_PATH}/manage/photo/delete.json", {"photoId": photoId}, function (data) {
-                                window.location.reload();
-                            }, "json");
-                        }
-                    },
-                    "cancel": {
-                        label: "取消",
-                        className: "btn-primary",
-                        callback: function () {
 
-                        }
+    //更新照片
+    function updatePhoto(photoId, title) {
+        $("#photoId").val(photoId);
+        $("#title").val(title);
+        $('#update_photo_dialog').modal('show');
+    }
+
+    //删除照片
+    function deletePhoto(photoId, title) {
+        bootbox.dialog({
+            message: "是否删除照片:" + title,
+            title: "提示",
+            buttons: {
+                "delete": {
+                    label: "确定",
+                    className: "btn-success",
+                    callback: function () {
+                        $.post("${BASE_PATH}/manage/photo/delete.json", {"photoId": photoId}, function (data) {
+                            window.location.reload();
+                        }, "json");
+                    }
+                },
+                "cancel": {
+                    label: "取消",
+                    className: "btn-primary",
+                    callback: function () {
+
                     }
                 }
-            });
+            }
         });
-    });
+    }
 </script>
 <#include "/manage/foot.ftl">

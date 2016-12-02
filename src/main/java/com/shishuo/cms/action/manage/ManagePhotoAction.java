@@ -4,6 +4,7 @@ import com.shishuo.cms.entity.Photo;
 import com.shishuo.cms.entity.vo.JsonVo;
 import com.shishuo.cms.entity.vo.PageVo;
 import com.shishuo.cms.exception.ArticleNotFoundException;
+import com.shishuo.cms.exception.AuthException;
 import com.shishuo.cms.exception.FolderNotFoundException;
 import com.shishuo.cms.util.MediaUtils;
 import net.sf.json.JSONException;
@@ -78,6 +79,18 @@ public class ManagePhotoAction extends ManageBaseAction {
         Photo photo = photoService.getPhotoById(photoId);
         MediaUtils.deleteFile(photo.getFilename());
         photoService.deletePhoto(photoId);
+        json.setResult(true);
+        return json;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/update.json", method = RequestMethod.POST)
+    public JsonVo<Photo> updatePhoto(@RequestParam(value = "photoId") int photoId,
+                                     @RequestParam(value = "title") String title) throws AuthException {
+        JsonVo<Photo> json = new JsonVo<Photo>();
+        // 删除文件系统
+        Photo photo = photoService.updatePhotoById(photoId, title);
+        json.setT(photo);
         json.setResult(true);
         return json;
     }

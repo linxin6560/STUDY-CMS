@@ -92,7 +92,6 @@ public class ManageAlbumAction extends ManageBaseAction {
             if (StringUtils.isEmpty(title)) {
                 jsonVo.getErrors().put("titleError", "标题不能为空");
             }
-            System.out.println("title=" + title + ",cover=" + cover);
             jsonVo.check();
             jsonVo.setResult(true);
             Album album = albumService.updateAlbumById(albumId, title, cover);

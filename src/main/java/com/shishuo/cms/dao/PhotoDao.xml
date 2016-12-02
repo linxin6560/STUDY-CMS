@@ -34,9 +34,9 @@
     <!-- ###### 修改 ###### -->
     <!-- ############################## -->
 
-    <update id="updatePhotoById">
+    <update id="updatePhotoById" parameterType="com.shishuo.cms.entity.Photo">
         UPDATE photo
-        SET title = #{title}, filename = #{filename}
+        SET title = #{title}
         WHERE id = #{id}
     </update>
     <!-- ############################## -->
