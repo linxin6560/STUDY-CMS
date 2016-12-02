@@ -43,9 +43,7 @@
                     </div>
                 </div>
             </header>
-            <div style="height: 30px; margin: 20px;">
-                <div class="pagination">${albumPage.pageNumHtml}</div>
-            </div>
+            <div style="height: 30px; margin: 20px;">${albumPage.pageNumHtml}</div>
             <div class="row photo_album">
             <#list albumPage.list as album>
                 <div class="col-md-3 mydiv">
