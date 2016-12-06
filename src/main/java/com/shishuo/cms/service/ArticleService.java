@@ -323,6 +323,27 @@ public class ArticleService {
     }
 
     /**
+     * 获取所有文章列表
+     *
+     * @param offset
+     * @param rows
+     * @return
+     * @throws FolderNotFoundException
+     */
+    public List<ArticleVo> getAllActicle(long offset, long rows) throws FolderNotFoundException {
+        List<ArticleVo> list = articleDao.getAllArticle(offset, rows);
+        for (ArticleVo article : list) {
+            try {
+                article.setFolder(folderService.getFolderById(article.getFolderId()));
+                article.setFolderPathList(folderService.getFolderPathListByFolderId(article.getFolderId()));
+            } catch (FolderNotFoundException e) {
+                article.setFolder(new Folder());
+            }
+        }
+        return list;
+    }
+
+    /**
      * @param folderId
      * @return
      * @throws FolderNotFoundException

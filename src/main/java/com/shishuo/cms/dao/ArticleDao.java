@@ -18,128 +18,132 @@ import com.shishuo.cms.entity.vo.ArticleVo;
 
 /**
  * 文件服务
- * 
+ *
  * @author Harbored
- * 
  */
 @Repository
 public interface ArticleDao {
 
-	// ///////////////////////////////
-	// ///// 增加 ////////
-	// ///////////////////////////////
+    // ///////////////////////////////
+    // ///// 增加 ////////
+    // ///////////////////////////////
 
-	/**
-	 * 增加文件
-	 * 
-	 * @return Integer
-	 */
-	public int addArticle(Article article);
+    /**
+     * 增加文件
+     *
+     * @return Integer
+     */
+    int addArticle(Article article);
 
-	// ///////////////////////////////
-	// ///// 刪除 ////////
-	// ///////////////////////////////
+    // ///////////////////////////////
+    // ///// 刪除 ////////
+    // ///////////////////////////////
 
-	/**
-	 * 删除文件
-	 * 
-	 * @return boolean
-	 */
-	public boolean deleteArticleById(@Param("articleId") long articleId);
+    /**
+     * 删除文件
+     *
+     * @return boolean
+     */
+    boolean deleteArticleById(@Param("articleId") long articleId);
 
-	// ///////////////////////////////
-	// ///// 修改 ////////
-	// ///////////////////////////////
+    // ///////////////////////////////
+    // ///// 修改 ////////
+    // ///////////////////////////////
 
-	/**
-	 * 修改文件
-	 * 
-	 * @param article
-	 * @return Integer
-	 */
-	public int updateArticle(Article article);
+    /**
+     * 修改文件
+     *
+     * @param article
+     * @return Integer
+     */
+    int updateArticle(Article article);
 
-	/**
-	 * 更新浏览人数
-	 * 
-	 * @param articleId
-	 * @param viewCount
-	 * @return int
-	 */
-	public int updateViewCount(@Param("articleId") long articleId,
-			@Param("viewCount") int viewCount);
+    /**
+     * 更新浏览人数
+     *
+     * @param articleId
+     * @param viewCount
+     * @return int
+     */
+    int updateViewCount(@Param("articleId") long articleId,
+                        @Param("viewCount") int viewCount);
 
-	/**
-	 * 更新评论数
-	 * 
-	 * @param articleId
-	 * @param commentCount
-	 * @return int
-	 */
+    /**
+     * 更新评论数
+     *
+     * @param articleId
+     * @param commentCount
+     * @return int
+     */
 
-	public int updateCommentCount(@Param("articleId") long articleId,
-			@Param("commentCount") int commentCount);
+    int updateCommentCount(@Param("articleId") long articleId,
+                           @Param("commentCount") int commentCount);
 
-	public int updateCheck(@Param("articleId") long articleId,
-			@Param("check") check check);
+    int updateCheck(@Param("articleId") long articleId,
+                    @Param("check") check check);
 
-	// ///////////////////////////////
-	// ///// 查詢 ////////
-	// ///////////////////////////////
+    // ///////////////////////////////
+    // ///// 查詢 ////////
+    // ///////////////////////////////
 
-	/**
-	 * 得到文件
-	 * 
-	 * @param articleId
-	 * @return File
-	 */
-	public ArticleVo getArticleById(@Param("articleId") long articleId);
+    /**
+     * 得到文件
+     *
+     * @param articleId
+     * @return File
+     */
+    ArticleVo getArticleById(@Param("articleId") long articleId);
 
-	/**
-	 * 得到目录的文件的列表
-	 * 
-	 * @param foderId
-	 * @return List<FileVo>
-	 */
-	public List<ArticleVo> getArticleListOfDisplayByPath(
-			@Param("path") String path, @Param("offset") long offset,
-			@Param("rows") long rows);
+    /**
+     * 得到目录的文件的列表
+     *
+     * @param path
+     * @return List<FileVo>
+     */
+    List<ArticleVo> getArticleListOfDisplayByPath(
+            @Param("path") String path, @Param("offset") long offset,
+            @Param("rows") long rows);
 
-	/**
-	 * 得到目录的所有文件的数量
-	 * 
-	 * @param foderId
-	 * @return Integer
-	 */
-	public int getArticleCountOfDisplayByPath(@Param("path") String path);
+    /**
+     * 得到目录的所有文件的数量
+     *
+     * @param path
+     * @return Integer
+     */
+    int getArticleCountOfDisplayByPath(@Param("path") String path);
 
-	/**
-	 * 得到某种显示的文件的列表
-	 * 
-	 * @param foderId
-	 * @return List<FileVo>
-	 */
-	public List<ArticleVo> getArticleListByAdminIdAndPath(
-			@Param("adminId") long adminId, @Param("path") String path,
-			@Param("check") ArticleConstant.check check,
-			@Param("offset") long offset, @Param("rows") long rows);
+    /**
+     * 得到某种显示的文件的列表
+     *
+     * @param path
+     * @return List<FileVo>
+     */
+    List<ArticleVo> getArticleListByAdminIdAndPath(
+            @Param("adminId") long adminId, @Param("path") String path,
+            @Param("check") ArticleConstant.check check,
+            @Param("offset") long offset, @Param("rows") long rows);
 
-	/**
-	 * @param firstFolderId
-	 * @param secondFolderId
-	 * @param thirdFolderId
-	 * @param fourthFolderId
-	 * @return
-	 */
-	public int getArticleCountByAdminIdAndPath(@Param("adminId") long adminId,
-			@Param("path") String path,
-			@Param("check") ArticleConstant.check check);
+    /**
+     * 获取所有文章
+     *
+     * @return
+     */
+    List<ArticleVo> getAllArticle(@Param("offset") long offset, @Param("rows") long rows);
 
-	/**
-	 * @param adminId
-	 * @param path
-	 * @return
-	 */
-	public int getArticleCountByFolderId(@Param("folderId") long folderId);
+    /**
+     * @param adminId
+     * @param path
+     * @param check
+     * @return
+     */
+    int getArticleCountByAdminIdAndPath(@Param("adminId") long adminId,
+                                        @Param("path") String path,
+                                        @Param("check") ArticleConstant.check check);
+
+    /**
+     * @param folderId
+     * @return
+     */
+    int getArticleCountByFolderId(@Param("folderId") long folderId);
 
 }

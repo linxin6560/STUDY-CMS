@@ -29,7 +29,7 @@ public class ArticleAction extends BaseAction {
 			@RequestParam(value = "p", defaultValue = "1") long p,
 			ModelMap modelMap) {
 		try {
-			ArticleVo article = fileService.getArticleById(articleId);
+			ArticleVo article = articleService.getArticleById(articleId);
 			Folder folder = folderService.getFolderById(article.getFolderId());
 			modelMap.addAttribute("p", p);
 			modelMap.addAttribute("folder", folder);

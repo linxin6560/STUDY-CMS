@@ -5,32 +5,32 @@
  */
 package com.shishuo.cms.action;
 
+import com.shishuo.cms.service.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.shishuo.cms.service.ArticleService;
-import com.shishuo.cms.service.FolderService;
-import com.shishuo.cms.service.HeadlineService;
-import com.shishuo.cms.service.TemplateService;
-
 /**
- * 
  * @author Herbert
- * 
  */
 public class BaseAction {
 
-	@Autowired
-	protected FolderService folderService;
+    @Autowired
+    protected FolderService folderService;
 
-	@Autowired
-	protected ArticleService fileService;
+    @Autowired
+    protected ArticleService articleService;
 
-	@Autowired
-	protected TemplateService themeService;
+    @Autowired
+    protected TemplateService themeService;
 
-	@Autowired
-	protected HeadlineService headlineService;
+    @Autowired
+    protected HeadlineService headlineService;
 
-	protected final Logger logger = Logger.getLogger(this.getClass());
+    @Autowired
+    protected AlbumService albumService;
+
+    @Autowired
+    protected PhotoService photoService;
+
+    protected final Logger logger = Logger.getLogger(this.getClass());
 }

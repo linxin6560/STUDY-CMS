@@ -25,7 +25,7 @@ public class IndexAction extends BaseAction {
 	/**
 	 * 首页
 	 * 
-	 * @param pageNum
+	 * @param p
 	 * @param modelMap
 	 * @return
 	 */
@@ -39,7 +39,7 @@ public class IndexAction extends BaseAction {
 	/**
 	 * 首页
 	 * 
-	 * @param pageNum
+	 * @param p
 	 * @param modelMap
 	 * @return
 	 */

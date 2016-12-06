@@ -26,8 +26,7 @@ public class FolderAction extends BaseAction {
 	/**
 	 * 目录ID
 	 * 
-	 * @param ename
-	 * @param pageNum
+	 * @param p
 	 * @param modelMap
 	 * @return
 	 */
